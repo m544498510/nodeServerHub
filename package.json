@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "a server hub with nodeJs",
   "scripts": {
-    "server": "babel-node src/Server",
+    "start": "babel-node src/index",
     "build": "babel src -d build"
   },
   "repository": {
