@@ -1,5 +1,5 @@
 /**
- * @author May
+ * @author may_firefly
  * @version 1.0.0
  */
 'use strict';
@@ -9,8 +9,8 @@ import multer from 'multer';
 import bodyParser from 'body-parser';
 import request from 'request';
 
-import * as spider from './spider';
-import {setCookie} from  './spider/CookieManager';
+import {spiderResquest} from './Spider';
+import {setCookie} from  './CookieManager';
 
 import config from './config';
 
@@ -26,7 +26,7 @@ app.use(['/static','//static'],express.static(config.staticPath));
 
 app.get("/*", (req, res) => {
   let url = req.originalUrl;
-  spider.spiderResquest(url,'GET',null,function(body,contentType){
+  spiderResquest(url,'GET',null,function(body,contentType){
     sendBody(res,body,contentType);
   });
 
@@ -34,7 +34,7 @@ app.get("/*", (req, res) => {
 
 app.post('/*',upload.array(), (req,res)=>{
   let url = req.originalUrl;
-  spider.spiderResquest(url,'POST',req.body,function(body,contentType){
+  spiderResquest(url,'POST',req.body,function(body,contentType){
     sendBody(res,body,contentType);
 
   });
