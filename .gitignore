@@ -1,0 +1,11 @@
+# Intellij build files
+.idea
+
+# git config files
+.git
+
+#other files
+build
+node_modules
+npm-debug.log
+
