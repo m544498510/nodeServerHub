@@ -1,6 +1,6 @@
 /**
- *
- * @author :    Mei XinLin
+ * request模块cookie管理
+ * @author :    may_firefly
  * @version :   1.0
  */
 'use strict';

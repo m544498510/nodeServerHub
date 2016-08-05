@@ -1,5 +1,6 @@
 /**
- * @author May
+ * 用于处理browser-sync
+ * @author may_firefly
  * @version 1.0.0
  */
 'use strict';

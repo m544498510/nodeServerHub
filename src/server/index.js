@@ -1,5 +1,6 @@
 /**
- * @author May
+ * 用于处理express服务
+ * @author may_firefly
  * @version 1.0.0
  */
 'use strict';
@@ -8,15 +9,22 @@ import express    from 'express';
 import multer     from 'multer';
 import bodyParser from 'body-parser';
 
-import {spiderResquest} from '../spider';
+import {spiderRequest} from '../spider';
 import initBrowserSync  from '../browserSync';
 
+/***
+ * 初始化express
+ * @param config {object} - 配置对象
+ */
 export const init = (config) => {
   const app = express();
   const port = config.port;
 
-  app.use(bodyParser.json()); // for parsing application/json
-  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  // 用于解析 application/json
+  app.use(bodyParser.json());
+  // 用于解析 application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({ extended: true }));
+  // 设置静态资源url 和 路径
   app.use(config.staticRes.sign, express.static(config.staticRes.path));
 
   initRoute(app);
@@ -24,6 +32,11 @@ export const init = (config) => {
   return app;
 };
 
+/***
+ * 启动express
+ * @param app {object} - express实例
+ * @param port {int}   - 端口
+ */
 export const start = (app,port) => {
   app.listen(port, function(error) {
     if (!error) {
@@ -35,12 +48,16 @@ export const start = (app,port) => {
   });
 };
 
+/***
+ * 路由
+ * @param app {object} - express实例
+ */
 function initRoute(app){
   const upload = multer();
 
   app.get("/*", (req, res) => {
     let url = req.originalUrl;
-    spiderResquest(url,'GET',null,function(body,contentType){
+    spiderRequest(url,'GET',null,function(body, contentType){
       sendBody(res,body,contentType);
     });
 
@@ -48,12 +65,18 @@ function initRoute(app){
 
   app.post('/*', upload.array(), (req,res)=>{
     let url = req.originalUrl;
-    spiderResquest(url,'POST',req.body,function(body,contentType){
+    spiderRequest(url,'POST',req.body,function(body, contentType){
       sendBody(res,body,contentType);
     });
   });
 }
 
+/***
+ * 请求返回处理
+ * @param res {object} - response 对象
+ * @param body {string} - 返回内容
+ * @param contentType {string} - 返回值类型
+ */
 function sendBody(res,body,contentType){
   res.set('Content-Type', contentType);
   res.send(body);
