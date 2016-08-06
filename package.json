@@ -28,7 +28,6 @@
     "babel-preset-stage-0": "^6.5.0",
     "body-parser": "^1.15.2",
     "browser-sync": "^2.14.0",
-    "cheerio": "^0.20.0",
     "express": "^4.14.0",
     "multer": "^1.2.0",
     "request": "^2.74.0"
