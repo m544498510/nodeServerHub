@@ -4,9 +4,10 @@
  */
 'use strict';
 
-const staticPath = 'F:/javaData/work/workCopy/javaFront/src/main/webapp/static';
+const staticPath = '';
 
 export default {
+  //中转服务端口
   port: 9090,
 
   //目标web服务，如www.baidu.com，localhost:8080等。
