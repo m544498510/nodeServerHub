@@ -14,20 +14,24 @@ import config from '../config';
  * 爬虫请求
  * @param url {string} - 请求路径
  * @param method {string} - 请求类型（GET,POST,PUT...）
- * @param params {object} - 请求参数（只有POST才有）
+ * @param req {object} - 请求信息
  * @param cb {function} - 回调函数
  */
-export const spiderRequest = (url, method, params, cb)=>{
+export const spiderRequest = (url, method,req, cb)=>{
   let jar = getCookie();
   let targetUrl = 'http://' + config.targetUrl + url;
+  let headers = req.headers;
+
+  formatHeaders(headers);
 
   let option = {
     url: targetUrl,
     method: method,
-    jar:jar
+    jar:jar,
+    headers: headers
   };
-  if(params){
-    option['form'] = params;
+  if(method == 'POST'){
+    option['form'] = req.body;
   }
 
   request(option, function (err, response, data){
@@ -63,8 +67,20 @@ function responseHandle(err, response, body,info, cb) {
 function bodyHandle(data){
   if(data && typeof data == 'string'){
     let reg = new RegExp(config.replaceUrl,'g');
-    data = data.replace(reg,'http://localhost:'+config.port);
+    if(data.indexOf('<html')>-1){
+      data = data.replace(reg,'http://localhost:'+config.port);
+    }
   }
   return data;
 }
 
+/**
+ * 部分headers的内容不采用浏览器的。
+ * @param headers {object}
+ */
+function formatHeaders(headers){
+  delete headers['cookie'];
+  delete headers['host'];
+  delete headers['referer'];
+
+}

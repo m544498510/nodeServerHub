@@ -40,7 +40,9 @@ export const init = (config) => {
 export const start = (app,port) => {
   app.listen(port, function(error) {
     if (!error) {
-      initBrowserSync();
+      if(!(process.argv.join().indexOf('--noBS')>-1)){
+        initBrowserSync();
+      }
       console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
     } else {
       console.error(error);
@@ -57,7 +59,7 @@ function initRoute(app){
 
   app.get("/*", (req, res) => {
     let url = req.originalUrl;
-    spiderRequest(url,'GET',null,function(body, contentType){
+    spiderRequest(url,'GET',req,function(body, contentType){
       sendBody(res,body,contentType);
     });
 
@@ -65,7 +67,7 @@ function initRoute(app){
 
   app.post('/*', upload.array(), (req,res)=>{
     let url = req.originalUrl;
-    spiderRequest(url,'POST',req.body,function(body, contentType){
+    spiderRequest(url,'POST',req, function(body, contentType){
       sendBody(res,body,contentType);
     });
   });
