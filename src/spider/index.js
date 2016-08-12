@@ -50,8 +50,7 @@ export const spiderRequest = (url, method,req, cb)=>{
 function responseHandle(err, response, body,info, cb) {
   console.log('----------url:  ' + info.url);
   if (!err && response.statusCode == 200) {
-    let contentType = response.headers['content-type'];
-    cb(bodyHandle(body),contentType);
+    cb(bodyHandle(body),response.headers);
   } else if(err){
     console.error(err);
   } else {

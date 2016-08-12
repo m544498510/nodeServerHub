@@ -59,16 +59,16 @@ function initRoute(app){
 
   app.get("/*", (req, res) => {
     let url = req.originalUrl;
-    spiderRequest(url,'GET',req,function(body, contentType){
-      sendBody(res,body,contentType);
+    spiderRequest(url,'GET',req,function(body, headers){
+      sendBody(res,body,headers);
     });
 
   });
 
   app.post('/*', upload.array(), (req,res)=>{
     let url = req.originalUrl;
-    spiderRequest(url,'POST',req, function(body, contentType){
-      sendBody(res,body,contentType);
+    spiderRequest(url,'POST',req, function(body, headers){
+      sendBody(res,body,headers);
     });
   });
 }
@@ -77,9 +77,9 @@ function initRoute(app){
  * 请求返回处理
  * @param res {object} - response 对象
  * @param body {string} - 返回内容
- * @param contentType {string} - 返回值类型
+ * @param headers {Object} - 返回值类型
  */
-function sendBody(res,body,contentType){
-  res.set('Content-Type', contentType);
+function sendBody(res,body,headers){
+  res.set('Content-Type', headers['content-type']);
   res.send(body);
 }
