@@ -28,6 +28,7 @@ export const spiderRequest = (url, method,req, cb)=>{
     url: targetUrl,
     method: method,
     jar:jar,
+    gzip: true,
     headers: headers
   };
   if(method == 'POST'){
