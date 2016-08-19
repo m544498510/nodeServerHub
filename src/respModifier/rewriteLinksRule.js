@@ -8,7 +8,7 @@ import url from "url";
 
 import config from '../config';
 
-var host = config.targetHost;
+var host = config.targetUrl;
 var string = host;
 var port = config.targetPort;
 

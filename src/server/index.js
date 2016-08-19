@@ -57,7 +57,7 @@ function initRoute(app){
   app.all("/*", (req, res) => {
 
     proxy.web(req, res, {
-      target: config.targetUrl
+      target: 'http://'+config.targetUrl + ':' + config.targetPort
     },function(e){
       console.log(e);
     });

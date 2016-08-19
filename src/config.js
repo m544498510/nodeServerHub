@@ -10,10 +10,11 @@ export default {
   //中转服务端口
   port: 9090,
 
-  //目标web服务，如www.baidu.com，localhost:8080等。
+  //目标web服务，如www.baidu.com，localhost等。
   targetUrl: '',
-  //用于替换页面内写死的绝对路径，如http://www.xxxxxx.com:80。
-  replaceUrl: '',
+  //目标服务的端口号，用于替换页面内的链接。
+  targetPort: '',
+
   //本地静态资源
   staticRes: {
     sign: ['/static','//static'], //请求标志
