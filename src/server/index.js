@@ -5,12 +5,13 @@
  */
 'use strict';
 
-import express    from 'express';
-import multer     from 'multer';
-import bodyParser from 'body-parser';
+import express from 'express';
 
-import {spiderRequest} from '../spider';
 import initBrowserSync  from '../browserSync';
+import proxy            from './proxy';
+import config           from '../config';
+import respModifier      from '../respModifier';
+
 
 /***
  * 初始化express
@@ -20,12 +21,10 @@ export const init = (config) => {
   const app = express();
   const port = config.port;
 
-  // 用于解析 application/json
-  app.use(bodyParser.json());
-  // 用于解析 application/x-www-form-urlencoded
-  app.use(bodyParser.urlencoded({ extended: true }));
   // 设置静态资源url 和 路径
   app.use(config.staticRes.sign, express.static(config.staticRes.path));
+
+  app.use(respModifier);
 
   initRoute(app);
 
@@ -55,31 +54,12 @@ export const start = (app,port) => {
  * @param app {object} - express实例
  */
 function initRoute(app){
-  const upload = multer();
+  app.all("/*", (req, res) => {
 
-  app.get("/*", (req, res) => {
-    let url = req.originalUrl;
-    spiderRequest(url,'GET',req,function(body, headers){
-      sendBody(res,body,headers);
-    });
-
-  });
-
-  app.post('/*', upload.array(), (req,res)=>{
-    let url = req.originalUrl;
-    spiderRequest(url,'POST',req, function(body, headers){
-      sendBody(res,body,headers);
+    proxy.web(req, res, {
+      target: config.targetUrl
+    },function(e){
+      console.log(e);
     });
   });
-}
-
-/***
- * 请求返回处理
- * @param res {object} - response 对象
- * @param body {string} - 返回内容
- * @param headers {Object} - 返回值类型
- */
-function sendBody(res,body,headers){
-  res.set('Content-Type', headers['content-type']);
-  res.send(body);
 }

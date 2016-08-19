@@ -4,7 +4,13 @@
   - 可以解决因为IDE启动的web服务无法立即刷新静态资源，导致browser-sync失效的问题。
 
 ## Version
-1.0.0
+2.0.0
+
+##Release History
+
+1.0.0 版本采用request爬数据
+
+2.0.0 版本采用http-proxy爬数据
 
 ## Installation
 
