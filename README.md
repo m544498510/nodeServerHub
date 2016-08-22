@@ -14,15 +14,15 @@
 
 ## Installation
 
-1.下载：
+1. 下载：
 
 ```sh
 $ git clone https://github.com/m544498510/nodeServerHub.git
 ```
 
-2.确保安装有[nodejs](https://nodejs.org) 4.0+
+2. 确保安装有[nodejs](https://nodejs.org) 4.0+
 
-3.在cmd输入下列命令
+3. 在cmd输入下列命令
 
 ```sh
 $ cd nodeServerHub
@@ -33,11 +33,13 @@ $ npm install
 
 1. 修改src/config.js里面的配置
 2. 使用命令启动服务
+
 ```sh
 $ npm start
 ```
 
-3.使用命令编译es2015代码
+3. 使用命令编译es2015代码
+
 ```sh
 $ npm run build
 ```
